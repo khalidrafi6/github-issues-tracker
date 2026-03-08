@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+        <!-- tailwind+daisyui -->
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+        <!-- font awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <style>
+         .issue-count-section{
+             display: flex;
+             gap: 10px;
+             align-items: center;
+         }
+
+         .issue-count-section .section-img{
+             background-color: #eef2ff;
+             padding: 8px;
+             border-radius: 50%;
+         }
+
+         .issue-count-section .section-content{
+             display: flex;
+             flex-direction: column;
+         }
+
+         .issue-count-section .section-content p{
+             color: gray;
+         }
+
+         .indicator{
+             display: inline-block;
+             width: 15px;
+             height: 15px;
+             border-radius: 50%;
+         }
+        </style>
+
+        <title>Issues</title>
+    </head>
+    <body>
+        <header>
+            <div class="flex justify-between navbar bg-base-100 shadow-sm">
+                <div class="flex items-center">
+                    <img alt="" src="./assets/github-logo.png" class="h-12 w-12" />
+                    <a class="btn btn-ghost text-xl">Github Issues Tracker</a>
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+                    <button class="btn btn-soft btn-primary"><i class="fa-solid fa-plus"></i> New Issue</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="tabs tabs-box px-[246px] py-[60px]">
+                <input type="radio" name="status_tabs" class="tab text-primary" aria-label="All" checked="checked" />
+                <div class="tab-content bg-base-100 border-base-300">
+                    <div id="all-tab-overview" class="flex justify-between p-3 border-transparent border-1 border-b-gray-300">
+                        <div class="issue-count-section">
+                            <div class="section-img">
+                                <img alt="" src="./assets/Aperture.png"/>
+                            </div>
+                            <div class="section-content">
+                                <h3 class="font-semibold text-lg"><span id="all-issue-count">50</span> issues</h3>
+                                <p>Track and manage your project issues</p>
+                            </div>
+                        </div>
+                        <div class="status-section flex gap-4">
+                            <div class="status-open flex items-center gap-2">
+                                <span class="bg-green-500 indicator"></span>
+                                <p>Open</p>
+                            </div>
+                            <div class="status-closed flex items-center gap-2">
+                                <span class="bg-purple-500 indicator"></span>
+                                <p>Closed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="issues-section bg-gray-100 p-6">
+                        <div class="card bg-base-100 w-96 shadow-sm">
+                            <div class="card-body">
+                                <div class="badge bg-green-500 badge-xs"></div>
+                                <h2 class="card-title">
+                                    Card Title
+                                    <div class="badge badge-soft badge-error">HIGH</div>
+                                </h2>
+                                <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                                <div class="card-actions justify-end">
+                                    <div class="badge badge-error text-white">Bug</div>
+                                    <div class="badge badge-warning text-white">Help Wanted</div>
+                                </div>
+                                <hr/>
+                                <div class="issue-data">
+                                    <h6>John Doe</h6>
+                                    <h6>12/2/2026</h6>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <input type="radio" name="status_tabs" class="tab" aria-label="Open" />
+                <div class="tab-content bg-base-100 border-base-300 p-6">
+                    <div id="open-tab-overview">
+                        <div class="issue-count-section">
+                            <div class="section-img">
+                                <img alt="" src="./assets/Aperture.png"/>
+                            </div>
+                            <div class="section-content">
+                                <h3 class="text-lg"><span id="open-issue-count">50</span> issues</h3>
+                                <p>Track and manage your project issues</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="radio" name="status_tabs" class="tab" aria-label="Closed" />
+                <div class="tab-content bg-base-100 border-base-300 p-6">
+                    <div id="closed-tab-overview">
+                        <div class="issue-count-section">
+                            <div class="section-img">
+                                <img alt="" src="./assets/Aperture.png"/>
+                            </div>
+                            <div class="section-content">
+                                <h3 class="text-lg"><span id="closed-issue-count">50</span> issues</h3>
+                                <p>Track and manage your project issues</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+
+</html>
