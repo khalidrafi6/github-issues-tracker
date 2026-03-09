@@ -47,17 +47,32 @@ const closedIssues = document.querySelector("#closed-issues");
 
 function displayIssues(issues, status) {
   for (issue of issues) {
-      
-    let issueCard = Object.assign(document.createElement("div"), {
-      className: "card bg-base-100 shadow-sm",
+
+      let issueCard = Object.assign(document.createElement("div"), {
+          id: `issue-${issue.id}`,
+        className: 'card bg-base-100 shadow-sm',
     });
+
+      const issueCreatedAt = new Date(issue.createdAt);
+      const issueDateSegments = issueCreatedAt.toDateString().split(" ");
+      const issueMonthAndDay = issueDateSegments[1] + " " + issueDateSegments[2];
+      issueDateSegments.splice(1, 2, issueMonthAndDay);
+      const issueFDate = issueDateSegments.join(", ");
+
+      
+      let issueModal = Object.assign(document.createElement("dialog"), {
+          id: `issue_${issue.id}_modal`,
+          className: "modal"
+      })
+
+      issueCard.addEventListener("click", () => {issueModal.showModal()})
 
     if (status === "open") {
       openIssues.appendChild(issueCard);
     } else if (status === "closed") {
       closedIssues.appendChild(issueCard);
     } else {
-      allIssues.appendChild(issueCard);
+        allIssues.append(issueCard, issueModal);
     }
 
     const openBadge = Object.assign(document.createElement("div"), {
@@ -131,11 +146,9 @@ function displayIssues(issues, status) {
 
     let issueDivider = document.createElement("hr");
 
-    const issueCreatedAt = new Date(issue.createdAt);
-
     let issueData = Object.assign(document.createElement("div"), {
       className: "issue-data",
-      innerHTML: `<h6>${issue.author}</h6><h6>${issueCreatedAt.toDateString()}</h6>`,
+        innerHTML: `<h6>${issue.author}</h6><h6>${issueFDate}</h6>`,
     });
 
     issueCard.appendChild(issueBody);
@@ -178,9 +191,46 @@ function displayIssues(issues, status) {
       documentation: docBadge,
     };
 
+      issueModal.innerHTML = `<div class="modal-box">
+     <h3 class="text-lg font-bold">${issue.title}</h3>
+<h6>
+${issue.status === "open" ? '<span class="badge bg-green-500 text-white">Open</span>' : '<h6><span class="badge bg-purple-500 text-white">Closed</span>'} | Opened by ${issue.author} | ${issueFDate}
+</h6>
+<p id="modal-${issue.id}-labels" class="flex gap-1 mt-4">
+</p>
+     <p class="py-4">${issue.description}</p>
+
+<div class="modal-data flex justify-around bg-slate-200 p-4">
+
+<span class="modal-assignee">
+Assignee:<br>
+${issue.assignee ? issue.assignee : "Not Assigned"}
+</span>
+
+<span class="modal-priority">
+Priority:<br>
+${issue.priority === "high" ? '<div class="badge badge-error">HIGH</div>' : (issue.priority === "medium" ? '<div class="badge badge-warning">MEDIUM</div>' : (issue.priority === "low" ? '<div class="badge">LOW</div>' : null ))}
+
+</span>
+</div>
+     <div class="modal-action">
+       <form method="dialog">
+         <!-- if there is a button in form, it will close the modal -->
+         <button class="btn">Close</button>
+       </form>
+     </div>
+   </div>`
+
+
+      const modalLabels = document.querySelector(`#modal-${issue.id}-labels`);
+
     for (label of issue.labels) {
       issueLabels.appendChild(labelBadges[label]);
+        modalLabels.appendChild(labelBadges[label]);
     }
+
+      console.log(modalLabels)
+      
   }
 }
 
