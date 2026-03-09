@@ -1,4 +1,23 @@
+const allIssues = document.querySelector("#all-issues");
+const openIssues = document.querySelector("#open-issues");
+const closedIssues = document.querySelector("#closed-issues");
+
+// Corresponding parent divs to attach spinner
+const allIssuesSection = document.querySelector("#all-issues-section");
+const openIssuesSection = document.querySelector("#open-issues-section");
+const closedIssuesSection = document.querySelector("#closed-issues-section");
+
+
+const spinner = Object.assign(document.createElement('span'), {
+    className: 'loading loading-spinner text-info'
+})
+
 async function loadIssues(status) {
+  if (status === "open") {
+
+      openIssuesSection.appendChild(spinner);
+      
+      
   const response = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
@@ -7,15 +26,37 @@ async function loadIssues(status) {
 
   let issues = responseObject.data;
 
-  if (status === "open") {
     let openIssues = issues.filter((d) => d.status === "open");
-    console.log("oL", openIssues.length);
     displayIssues(openIssues, status);
   } else if (status === "closed") {
+      
+
+      closedIssuesSection.appendChild(spinner);
+      
+  const response = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+  );
+
+  const responseObject = await response.json();
+
+  let issues = responseObject.data;
+
     let closedIssues = issues.filter((d) => d.status === "closed");
     console.log("cL", closedIssues.length);
     displayIssues(closedIssues, status);
   } else {
+
+
+      allIssuesSection.appendChild(spinner);
+      
+  const response = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+  );
+
+  const responseObject = await response.json();
+
+  let issues = responseObject.data;
+
     displayIssues(issues, status);
   }
 }
@@ -41,16 +82,12 @@ async function loadIssues(status) {
 
 //                         </div>
 
-const allIssues = document.querySelector("#all-issues");
-const openIssues = document.querySelector("#open-issues");
-const closedIssues = document.querySelector("#closed-issues");
-
 function displayIssues(issues, status) {
   for (issue of issues) {
 
       let issueCard = Object.assign(document.createElement("div"), {
           id: `issue-${issue.id}`,
-        className: 'card bg-base-100 shadow-sm',
+        className: 'card bg-base-100 shadow-sm border-transparent border-4',
     });
 
       const issueCreatedAt = new Date(issue.createdAt);
@@ -155,8 +192,10 @@ function displayIssues(issues, status) {
 
     if (issue.status === "open") {
       topBadges.appendChild(openBadge);
+        issueCard.classList.add('border-t-green-500');
     } else {
       topBadges.appendChild(closedBadge);
+        issueCard.classList.add('border-t-purple-500');
     }
 
     switch (issue.priority) {
@@ -209,7 +248,7 @@ ${issue.assignee ? issue.assignee : "Not Assigned"}
 
 <span class="modal-priority">
 Priority:<br>
-${issue.priority === "high" ? '<div class="badge badge-error">HIGH</div>' : (issue.priority === "medium" ? '<div class="badge badge-warning">MEDIUM</div>' : (issue.priority === "low" ? '<div class="badge">LOW</div>' : null ))}
+${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</div>' : (issue.priority === "medium" ? '<div class="badge badge-warning text-white">MEDIUM</div>' : (issue.priority === "low" ? '<div class="badge badge-neutral text-white">LOW</div>' : null ))}
 
 </span>
 </div>
@@ -229,7 +268,7 @@ ${issue.priority === "high" ? '<div class="badge badge-error">HIGH</div>' : (iss
         modalLabels.appendChild(labelBadges[label]);
     }
 
-      console.log(modalLabels)
+      // spinner.remove();
       
   }
 }
@@ -238,11 +277,14 @@ loadIssues();
 
 const openTab = document.querySelector("#open-tab");
 const closedTab = document.querySelector("#closed-tab");
+const once = {
+    once: true
+}
 
 openTab.addEventListener("click", () => {
   loadIssues("open");
-});
+}, once);
 
 closedTab.addEventListener("click", () => {
   loadIssues("closed");
-});
+}, once);
