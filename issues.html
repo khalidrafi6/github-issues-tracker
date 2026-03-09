@@ -70,7 +70,9 @@
         </div>
         <div class="flex gap-2">
           <input
-            type="text"
+            type="search"
+            id="search-field"
+            name="q"
             placeholder="Search"
             class="input input-sm md:input-md input-bordered w-24 md:w-auto"
           />
@@ -91,7 +93,10 @@
           aria-label="All"
           checked="checked"
         />
-        <div id="all-tab-content" class="tab-content bg-base-100 border-base-300">
+        <div
+          id="all-tab-content"
+          class="tab-content bg-base-100 border-base-300"
+        >
           <div
             id="all-tab-overview"
             class="flex flex-col-reverse gap-1 sm:flex-row sm:justify-between p-3 border-transparent border-1 border-b-gray-300"
@@ -119,13 +124,16 @@
             </div>
           </div>
 
-          <div id="all-issues-section" class="bg-gray-100 p-3 flex justify-center">
-              <div
-                  id="all-issues"
-                  class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2"
-              ></div>
+          <div
+            id="all-issues-section"
+            class="bg-gray-100 p-3 flex justify-center"
+          >
+            <div
+              id="all-issues"
+              class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2"
+            ></div>
+          </div>
         </div>
-      </div>
 
         <input
           id="open-tab"
@@ -134,7 +142,10 @@
           class="tab"
           aria-label="Open"
         />
-        <div id="open-tab-content" class="tab-content bg-base-100 border-base-300">
+        <div
+          id="open-tab-content"
+          class="tab-content bg-base-100 border-base-300"
+        >
           <div
             id="open-tab-overview"
             class="flex flex-col-reverse gap-1 sm:flex-row sm:justify-between p-3 border-transparent border-1 border-b-gray-300"
@@ -162,13 +173,14 @@
             </div>
           </div>
 
-          
-
-          <div id="open-issues-section" class="bg-gray-100 p-3 flex justify-center">
           <div
-            id="open-issues"
-            class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
-          ></div>
+            id="open-issues-section"
+            class="bg-gray-100 p-3 flex justify-center"
+          >
+            <div
+              id="open-issues"
+              class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
+            ></div>
           </div>
         </div>
 
@@ -179,7 +191,10 @@
           class="tab"
           aria-label="Closed"
         />
-        <div id="closed-tab-content" class="tab-content bg-base-100 border-base-300">
+        <div
+          id="closed-tab-content"
+          class="tab-content bg-base-100 border-base-300"
+        >
           <div
             id="closed-tab-overview"
             class="flex flex-col-reverse gap-1 sm:flex-row sm:justify-between p-3 border-transparent border-1 border-b-gray-300"
@@ -207,11 +222,14 @@
             </div>
           </div>
 
-          <div id="closed-issues-section" class="bg-gray-100 p-3 flex justify-center">
-              <div
-                  id="closed-issues"
-                  class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
-              ></div>
+          <div
+            id="closed-issues-section"
+            class="bg-gray-100 p-3 flex justify-center"
+          >
+            <div
+              id="closed-issues"
+              class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
+            ></div>
           </div>
         </div>
       </div>

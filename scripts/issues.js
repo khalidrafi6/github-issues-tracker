@@ -7,55 +7,48 @@ const allIssuesSection = document.querySelector("#all-issues-section");
 const openIssuesSection = document.querySelector("#open-issues-section");
 const closedIssuesSection = document.querySelector("#closed-issues-section");
 
-
-const spinner = Object.assign(document.createElement('span'), {
-    className: 'loading loading-spinner text-info'
-})
+const spinner = Object.assign(document.createElement("span"), {
+  className: "loading loading-spinner text-info",
+});
 
 async function loadIssues(status) {
   if (status === "open") {
+    openIssuesSection.appendChild(spinner);
 
-      openIssuesSection.appendChild(spinner);
-      
-      
-  const response = await fetch(
-    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
-  );
+    const response = await fetch(
+      "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+    );
 
-  const responseObject = await response.json();
+    const responseObject = await response.json();
 
-  let issues = responseObject.data;
+    let issues = responseObject.data;
 
     let openIssues = issues.filter((d) => d.status === "open");
     displayIssues(openIssues, status);
   } else if (status === "closed") {
-      
+    closedIssuesSection.appendChild(spinner);
 
-      closedIssuesSection.appendChild(spinner);
-      
-  const response = await fetch(
-    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
-  );
+    const response = await fetch(
+      "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+    );
 
-  const responseObject = await response.json();
+    const responseObject = await response.json();
 
-  let issues = responseObject.data;
+    let issues = responseObject.data;
 
     let closedIssues = issues.filter((d) => d.status === "closed");
     console.log("cL", closedIssues.length);
     displayIssues(closedIssues, status);
   } else {
+    allIssuesSection.appendChild(spinner);
 
+    const response = await fetch(
+      "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+    );
 
-      allIssuesSection.appendChild(spinner);
-      
-  const response = await fetch(
-    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
-  );
+    const responseObject = await response.json();
 
-  const responseObject = await response.json();
-
-  let issues = responseObject.data;
+    let issues = responseObject.data;
 
     displayIssues(issues, status);
   }
@@ -84,32 +77,32 @@ async function loadIssues(status) {
 
 function displayIssues(issues, status) {
   for (issue of issues) {
-
-      let issueCard = Object.assign(document.createElement("div"), {
-          id: `issue-${issue.id}`,
-        className: 'card bg-base-100 shadow-sm border-transparent border-4',
+    let issueCard = Object.assign(document.createElement("div"), {
+      id: `issue-${issue.id}`,
+      className: "card bg-base-100 shadow-sm border-transparent border-4",
     });
 
-      const issueCreatedAt = new Date(issue.createdAt);
-      const issueDateSegments = issueCreatedAt.toDateString().split(" ");
-      const issueMonthAndDay = issueDateSegments[1] + " " + issueDateSegments[2];
-      issueDateSegments.splice(1, 2, issueMonthAndDay);
-      const issueFDate = issueDateSegments.join(", ");
+    const issueCreatedAt = new Date(issue.createdAt);
+    const issueDateSegments = issueCreatedAt.toDateString().split(" ");
+    const issueMonthAndDay = issueDateSegments[1] + " " + issueDateSegments[2];
+    issueDateSegments.splice(1, 2, issueMonthAndDay);
+    const issueFDate = issueDateSegments.join(", ");
 
-      
-      let issueModal = Object.assign(document.createElement("dialog"), {
-          id: `issue_${issue.id}_modal`,
-          className: "modal"
-      })
+    let issueModal = Object.assign(document.createElement("dialog"), {
+      id: `issue_${issue.id}_modal`,
+      className: "modal",
+    });
 
-      issueCard.addEventListener("click", () => {issueModal.showModal()})
+    issueCard.addEventListener("click", () => {
+      issueModal.showModal();
+    });
 
     if (status === "open") {
       openIssues.appendChild(issueCard);
     } else if (status === "closed") {
       closedIssues.appendChild(issueCard);
     } else {
-        allIssues.append(issueCard, issueModal);
+      allIssues.append(issueCard, issueModal);
     }
 
     const openBadge = Object.assign(document.createElement("div"), {
@@ -185,17 +178,17 @@ function displayIssues(issues, status) {
 
     let issueData = Object.assign(document.createElement("div"), {
       className: "issue-data",
-        innerHTML: `<h6>${issue.author}</h6><h6>${issueFDate}</h6>`,
+      innerHTML: `<h6>${issue.author}</h6><h6>${issueFDate}</h6>`,
     });
 
     issueCard.appendChild(issueBody);
 
     if (issue.status === "open") {
       topBadges.appendChild(openBadge);
-        issueCard.classList.add('border-t-green-500');
+      issueCard.classList.add("border-t-green-500");
     } else {
       topBadges.appendChild(closedBadge);
-        issueCard.classList.add('border-t-purple-500');
+      issueCard.classList.add("border-t-purple-500");
     }
 
     switch (issue.priority) {
@@ -230,7 +223,7 @@ function displayIssues(issues, status) {
       documentation: docBadge,
     };
 
-      issueModal.innerHTML = `<div class="modal-box">
+    issueModal.innerHTML = `<div class="modal-box">
      <h3 class="text-lg font-bold">${issue.title}</h3>
 <h6>
 ${issue.status === "open" ? '<span class="badge bg-green-500 text-white">Open</span>' : '<h6><span class="badge bg-purple-500 text-white">Closed</span>'} | Opened by ${issue.author} | ${issueFDate}
@@ -248,7 +241,7 @@ ${issue.assignee ? issue.assignee : "Not Assigned"}
 
 <span class="modal-priority">
 Priority:<br>
-${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</div>' : (issue.priority === "medium" ? '<div class="badge badge-warning text-white">MEDIUM</div>' : (issue.priority === "low" ? '<div class="badge badge-neutral text-white">LOW</div>' : null ))}
+${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</div>' : issue.priority === "medium" ? '<div class="badge badge-warning text-white">MEDIUM</div>' : issue.priority === "low" ? '<div class="badge badge-neutral text-white">LOW</div>' : null}
 
 </span>
 </div>
@@ -258,18 +251,16 @@ ${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</d
          <button class="btn">Close</button>
        </form>
      </div>
-   </div>`
+   </div>`;
 
-
-      const modalLabels = document.querySelector(`#modal-${issue.id}-labels`);
+    const modalLabels = document.querySelector(`#modal-${issue.id}-labels`);
 
     for (label of issue.labels) {
       issueLabels.appendChild(labelBadges[label]);
-        modalLabels.appendChild(labelBadges[label]);
+      modalLabels.appendChild(labelBadges[label]);
     }
 
-      // spinner.remove();
-      
+    // spinner.remove();
   }
 }
 
@@ -278,13 +269,21 @@ loadIssues();
 const openTab = document.querySelector("#open-tab");
 const closedTab = document.querySelector("#closed-tab");
 const once = {
-    once: true
-}
+  once: true,
+};
 
-openTab.addEventListener("click", () => {
-  loadIssues("open");
-}, once);
+openTab.addEventListener(
+  "click",
+  () => {
+    loadIssues("open");
+  },
+  once,
+);
 
-closedTab.addEventListener("click", () => {
-  loadIssues("closed");
-}, once);
+closedTab.addEventListener(
+  "click",
+  () => {
+    loadIssues("closed");
+  },
+  once,
+);
