@@ -46,21 +46,22 @@
         <header>
             <div class="flex justify-between navbar bg-base-100 shadow-sm">
                 <div class="flex items-center">
-                    <img alt="" src="./assets/github-logo.png" class="h-12 w-12" />
-                    <a class="btn btn-ghost text-xl">Github Issues Tracker</a>
+                    <img alt="" src="./assets/github-logo.png" class="h-8 w-8 md:h-12 md:w-12" />
+                    <a class="btn btn-ghost h-min text-xl hidden sm:inline">Github Issues Tracker</a>
+                    <a class="btn btn-ghost text-sm text-left sm:hidden">Github Issues<br>Tracker</a>
                 </div>
                 <div class="flex gap-2">
-                    <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
-                    <button class="btn btn-soft btn-primary"><i class="fa-solid fa-plus"></i> New Issue</button>
+                    <input type="text" placeholder="Search" class="input input-sm input-bordered w-24 md:w-auto" />
+                    <button class="btn btn-soft btn-sm btn-primary"><i class="fa-solid fa-plus"></i><span class="hidden sm:inline"> New Issue</span></button>
                 </div>
             </div>
         </header>
 
         <main>
-            <div class="tabs tabs-box px-[246px] py-[60px]">
+            <div class="tabs tabs-box p-6 md:p-8 lg:px-[100px] lg:py-[60px]">
                 <input type="radio" name="status_tabs" class="tab text-primary" aria-label="All" checked="checked" />
                 <div class="tab-content bg-base-100 border-base-300">
-                    <div id="all-tab-overview" class="flex justify-between p-3 border-transparent border-1 border-b-gray-300">
+                    <div id="all-tab-overview" class="flex flex-col-reverse gap-1 sm:flex-row sm:justify-between p-3 border-transparent border-1 border-b-gray-300">
                         <div class="issue-count-section">
                             <div class="section-img">
                                 <img alt="" src="./assets/Aperture.png"/>
@@ -70,7 +71,7 @@
                                 <p>Track and manage your project issues</p>
                             </div>
                         </div>
-                        <div class="status-section flex gap-4">
+                        <div class="status-section flex self-end sm:self-center gap-4">
                             <div class="status-open flex items-center gap-2">
                                 <span class="bg-green-500 indicator"></span>
                                 <p>Open</p>
@@ -82,60 +83,70 @@
                         </div>
                     </div>
 
-                    <div class="issues-section bg-gray-100 p-6">
-                        <div class="card bg-base-100 w-96 shadow-sm">
-                            <div class="card-body">
-                                <div class="badge bg-green-500 badge-xs"></div>
-                                <h2 class="card-title">
-                                    Card Title
-                                    <div class="badge badge-soft badge-error">HIGH</div>
-                                </h2>
-                                <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                                <div class="card-actions justify-end">
-                                    <div class="badge badge-error text-white">Bug</div>
-                                    <div class="badge badge-warning text-white">Help Wanted</div>
-                                </div>
-                                <hr/>
-                                <div class="issue-data">
-                                    <h6>John Doe</h6>
-                                    <h6>12/2/2026</h6>
-                                </div>
-                            </div>
-                            
-                        </div>
+                    <div id="all-issues" class="issues-section grid bg-gray-100 p-6">
+                        
                     </div>
                 </div>
                 
                 <input type="radio" name="status_tabs" class="tab" aria-label="Open" />
-                <div class="tab-content bg-base-100 border-base-300 p-6">
-                    <div id="open-tab-overview">
+                <div class="tab-content bg-base-100 border-base-300">
+                    <div id="open-tab-overview" class="flex flex-col-reverse gap-1 sm:flex-row sm:justify-between p-3 border-transparent border-1 border-b-gray-300">
                         <div class="issue-count-section">
                             <div class="section-img">
                                 <img alt="" src="./assets/Aperture.png"/>
                             </div>
                             <div class="section-content">
-                                <h3 class="text-lg"><span id="open-issue-count">50</span> issues</h3>
+                                <h3 class="font-semibold text-lg"><span id="all-issue-count">5</span> issues</h3>
                                 <p>Track and manage your project issues</p>
                             </div>
                         </div>
+                        <div class="status-section flex self-end sm:self-center gap-4">
+                            <div class="status-open flex items-center gap-2">
+                                <span class="bg-green-500 indicator"></span>
+                                <p>Open</p>
+                            </div>
+                            <div class="status-closed flex items-center gap-2">
+                                <span class="bg-purple-500 indicator"></span>
+                                <p>Closed</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="open-issues" class="issues-section bg-gray-100 p-6">
+                        
                     </div>
                 </div>
 
                 <input type="radio" name="status_tabs" class="tab" aria-label="Closed" />
-                <div class="tab-content bg-base-100 border-base-300 p-6">
-                    <div id="closed-tab-overview">
+                <div class="tab-content bg-base-100 border-base-300">
+                    <div id="closed-tab-overview" class="flex flex-col-reverse gap-1 sm:flex-row sm:justify-between p-3 border-transparent border-1 border-b-gray-300">
                         <div class="issue-count-section">
                             <div class="section-img">
                                 <img alt="" src="./assets/Aperture.png"/>
                             </div>
                             <div class="section-content">
-                                <h3 class="text-lg"><span id="closed-issue-count">50</span> issues</h3>
+                                <h3 class="font-semibold text-lg"><span id="all-issue-count">8</span> issues</h3>
                                 <p>Track and manage your project issues</p>
                             </div>
                         </div>
+                        <div class="status-section flex self-end sm:self-center gap-4">
+                            <div class="status-open flex items-center gap-2">
+                                <span class="bg-green-500 indicator"></span>
+                                <p>Open</p>
+                            </div>
+                            <div class="status-closed flex items-center gap-2">
+                                <span class="bg-purple-500 indicator"></span>
+                                <p>Closed</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="closed-issues" class="issues-section bg-gray-100 p-6">
+                        
                     </div>
                 </div>
             </div>
+            <script src="./scripts/issues.js"></script>
         </main>
     </body>
 
