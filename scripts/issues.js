@@ -7,73 +7,33 @@ const allIssuesSection = document.querySelector("#all-issues-section");
 const openIssuesSection = document.querySelector("#open-issues-section");
 const closedIssuesSection = document.querySelector("#closed-issues-section");
 
-const spinner = Object.assign(document.createElement("span"), {
-  className: "loading loading-spinner text-info",
-});
+const allIssuesSpinner = document.querySelector('#all-issues-spinner');
+const openIssuesSpinner = document.querySelector('#open-issues-spinner');
+const closedIssuesSpinner = document.querySelector('#closed-issues-spinner');
 
 async function loadIssues(status) {
-  if (status === "open") {
-    openIssuesSection.appendChild(spinner);
 
     const response = await fetch(
-      "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+        "https://phi-lab-server.vercel.app/api/v1/lab/issues",
     );
 
     const responseObject = await response.json();
 
     let issues = responseObject.data;
+    
+  if (status === "open") {
 
     let openIssues = issues.filter((d) => d.status === "open");
     displayIssues(openIssues, status);
   } else if (status === "closed") {
-    closedIssuesSection.appendChild(spinner);
-
-    const response = await fetch(
-      "https://phi-lab-server.vercel.app/api/v1/lab/issues",
-    );
-
-    const responseObject = await response.json();
-
-    let issues = responseObject.data;
 
     let closedIssues = issues.filter((d) => d.status === "closed");
-    console.log("cL", closedIssues.length);
     displayIssues(closedIssues, status);
   } else {
-    allIssuesSection.appendChild(spinner);
-
-    const response = await fetch(
-      "https://phi-lab-server.vercel.app/api/v1/lab/issues",
-    );
-
-    const responseObject = await response.json();
-
-    let issues = responseObject.data;
 
     displayIssues(issues, status);
   }
 }
-
-// <div class="card bg-base-100 sm:w-[50%] md:w-96 shadow-sm">
-//                             <div class="card-body">
-//                                 <div class="badge bg-green-500 badge-xs"></div>
-//                                 <h2 class="card-title">
-//                                     Card Title
-//                                     <div class="badge badge-soft badge-error">HIGH</div>
-//                                 </h2>
-//                                 <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-//                                 <div class="card-actions justify-end">
-//                                     <div class="badge badge-error text-white">Bug</div>
-//                                     <div class="badge badge-warning text-white">Help Wanted</div>
-//                                 </div>
-//                                 <hr/>
-//                                 <div class="issue-data">
-//                                     <h6>John Doe</h6>
-//                                     <h6>12/2/2026</h6>
-//                                 </div>
-//                             </div>
-
-//                         </div>
 
 function displayIssues(issues, status) {
   for (issue of issues) {
@@ -98,11 +58,14 @@ function displayIssues(issues, status) {
     });
 
     if (status === "open") {
-      openIssues.appendChild(issueCard);
+        openIssues.appendChild(issueCard);
+        const spinner = openIssuesSpinner;
     } else if (status === "closed") {
       closedIssues.appendChild(issueCard);
+        const spinner = closedIssuesSpinner;
     } else {
       allIssues.append(issueCard, issueModal);
+        const spinner = allIssuesSpinner;
     }
 
     const openBadge = Object.assign(document.createElement("div"), {

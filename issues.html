@@ -125,13 +125,15 @@
           </div>
 
           <div
-            id="all-issues-section"
-            class="bg-gray-100 p-3 flex justify-center"
+              id="all-issues-section"
+              class="bg-gray-100 p-3 flex justify-center"
           >
+              <span id="all-issues-spinner" class="loading loading-spinner text-accent"></span>
             <div
               id="all-issues"
               class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2"
-            ></div>
+            >
+            </div>
           </div>
         </div>
 
@@ -174,9 +176,10 @@
           </div>
 
           <div
-            id="open-issues-section"
-            class="bg-gray-100 p-3 flex justify-center"
+              id="open-issues-section"
+              class="bg-gray-100 p-3 flex justify-center"
           >
+              <span id="open-issues-spinner" class="loading loading-spinner text-accent"></span>
             <div
               id="open-issues"
               class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
@@ -223,13 +226,14 @@
           </div>
 
           <div
-            id="closed-issues-section"
-            class="bg-gray-100 p-3 flex justify-center"
+              id="closed-issues-section"
+              class="bg-gray-100 p-3 flex justify-center"
           >
-            <div
-              id="closed-issues"
-              class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
-            ></div>
+              <span id="closed-issues-spinner" class="loading loading-spinner text-accent"></span>
+              <div
+                  id="closed-issues"
+                  class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
+              ></div>
           </div>
         </div>
       </div>
