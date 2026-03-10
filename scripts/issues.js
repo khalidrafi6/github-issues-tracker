@@ -256,8 +256,10 @@ ${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</d
     const modalLabels = document.querySelector(`#modal-${issue.id}-labels`);
 
     for (label of issue.labels) {
-      issueLabels.appendChild(labelBadges[label]);
-      modalLabels.appendChild(labelBadges[label]);
+
+        issueLabels.appendChild(labelBadges[label]);
+        modalLabels.innerHTML += labelBadges[label].outerHTML; // Because appendChild() breaks issueLabels
+        
     }
 
     // spinner.remove();
