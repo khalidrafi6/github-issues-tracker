@@ -48,6 +48,22 @@
         height: 15px;
         border-radius: 50%;
       }
+
+     .spinner-section {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         gap: 6px;
+         padding: 25px;
+         margin: 75px;
+         /* width: max-content; */
+     }
+
+     .spinner-section .loading-spinner {
+         width: 50px;
+         height: 50px;
+     }
     </style>
 
     <title>Issues</title>
@@ -69,14 +85,17 @@
           >
         </div>
         <div class="flex gap-2">
-          <input
-            type="search"
-            id="search-field"
-            name="q"
-            placeholder="Search"
-            class="input input-sm md:input-md input-bordered w-24 md:w-auto"
-          />
-          <button class="btn btn-soft btn-sm md:btn-md btn-primary">
+            <form id="search" class="flex gap-2 sm:gap-1">
+                <input
+                    type="search"
+                    id="search-field"
+                    name="q"
+                    placeholder="Search"
+                    class="input input-sm rounded-md md:input-md input-bordered w-17 sm:w-auto"
+                />
+                <button class="btn btn-circle btn-soft btn-sm md:btn-md btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <button class="btn btn-soft btn-sm rounded-full p-2 sm:rounded-none sm:p-auto md:btn-md btn-primary">
             <i class="fa-solid fa-plus"></i
             ><span class="hidden sm:inline"> New Issue</span>
           </button>
@@ -89,7 +108,7 @@
         <input
           type="radio"
           name="status_tabs"
-          class="tab text-primary"
+          class="tab"
           aria-label="All"
           checked="checked"
         />
@@ -107,7 +126,7 @@
               </div>
               <div class="section-content">
                 <h3 class="font-semibold text-lg">
-                  <span id="all-issue-count">50</span> issues
+                    <span id="all-issues-count" class="loading loading-spinner loading-xs text-primary"></span> issues
                 </h3>
                 <p>Track and manage your project issues</p>
               </div>
@@ -128,10 +147,13 @@
               id="all-issues-section"
               class="bg-gray-100 p-3 flex justify-center"
           >
-              <span id="all-issues-spinner" class="loading loading-spinner text-accent"></span>
+              <div id="all-issues-spinner" class="spinner-section">
+                  <span class="loading loading-spinner text-primary"></span>
+                  <p class="text-gray-500">Loading...</p>
+              </div>
             <div
               id="all-issues"
-              class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2"
+              class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2"
             >
             </div>
           </div>
@@ -158,7 +180,7 @@
               </div>
               <div class="section-content">
                 <h3 class="font-semibold text-lg">
-                  <span id="open-issue-count">44</span> issues
+                    <span id="open-issues-count" class="loading loading-spinner loading-xs text-primary"></span> issues
                 </h3>
                 <p>Track and manage your project issues</p>
               </div>
@@ -179,10 +201,13 @@
               id="open-issues-section"
               class="bg-gray-100 p-3 flex justify-center"
           >
-              <span id="open-issues-spinner" class="loading loading-spinner text-accent"></span>
+              <div id="open-issues-spinner" class="spinner-section">
+                  <span class="loading loading-spinner text-primary"></span>
+                  <p class="text-gray-500">Loading...</p>
+              </div>
             <div
               id="open-issues"
-              class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
+              class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
             ></div>
           </div>
         </div>
@@ -207,8 +232,8 @@
                 <img alt="" src="./assets/Aperture.png" />
               </div>
               <div class="section-content">
-                <h3 class="font-semibold text-lg">
-                  <span id="closed-issue-count">6</span> issues
+                  <h3 class="font-semibold text-lg">
+                      <span id="closed-issues-count" class="loading loading-spinner loading-xs text-primary"></span> issues
                 </h3>
                 <p>Track and manage your project issues</p>
               </div>
@@ -229,15 +254,19 @@
               id="closed-issues-section"
               class="bg-gray-100 p-3 flex justify-center"
           >
-              <span id="closed-issues-spinner" class="loading loading-spinner text-accent"></span>
+              <div id="closed-issues-spinner" class="spinner-section">
+                  <span class="loading loading-spinner text-primary"></span>
+                  <p class="text-gray-500">Loading...</p>
+              </div>
               <div
                   id="closed-issues"
-                  class="issues-section grid grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
+                  class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
               ></div>
           </div>
         </div>
       </div>
       <script src="./scripts/issues.js"></script>
+      <script src="./scripts/search.js"></script>
     </main>
   </body>
 </html>

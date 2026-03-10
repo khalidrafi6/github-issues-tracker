@@ -53,6 +53,12 @@ async function loadIssues(tab) {
 
 function displayIssues(issues, tab) {
 
+    let c = issueElems[tab];
+
+    c.count.className = ""; // Remove spinner
+    c.count.innerText = issues.length;
+
+
   for (issue of issues) {
     let issueCard = Object.assign(document.createElement("div"), {
       id: `issue-${issue.id}`,
@@ -73,8 +79,6 @@ function displayIssues(issues, tab) {
     issueCard.addEventListener("click", () => {
       issueModal.showModal();
     });
-
-    let c = issueElems[tab];
 
       c.issues.append(issueCard, issueModal);
       
@@ -123,7 +127,7 @@ function displayIssues(issues, tab) {
 
     const goodBadge = Object.assign(document.createElement("div"), {
       textContent: "Good First Issue",
-      className: "badge badge-accent text-white",
+      className: "badge badge-accent text-white h-fit",
     });
 
     let issueBody = Object.assign(document.createElement("div"), {
@@ -147,10 +151,12 @@ function displayIssues(issues, tab) {
       className: "card-actions justify-end flex-col items-end",
     });
 
-    let issueDivider = document.createElement("hr");
+      let issueDivider = Object.assign(document.createElement("hr"), {
+          className: 'h-2',
+      });
 
     let issueData = Object.assign(document.createElement("div"), {
-      className: "issue-data",
+        className: "issue-data text-gray-500",
       innerHTML: `<h6>${issue.author}</h6><h6>${issueFDate}</h6>`,
     });
 
