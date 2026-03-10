@@ -2,16 +2,36 @@ const allIssues = document.querySelector("#all-issues");
 const openIssues = document.querySelector("#open-issues");
 const closedIssues = document.querySelector("#closed-issues");
 
-// Corresponding parent divs to attach spinner
-const allIssuesSection = document.querySelector("#all-issues-section");
-const openIssuesSection = document.querySelector("#open-issues-section");
-const closedIssuesSection = document.querySelector("#closed-issues-section");
+const allIssuesSpinner = document.getElementById('all-issues-spinner');
+const openIssuesSpinner = document.getElementById('open-issues-spinner');
+const closedIssuesSpinner = document.getElementById('closed-issues-spinner');
 
-const allIssuesSpinner = document.querySelector('#all-issues-spinner');
-const openIssuesSpinner = document.querySelector('#open-issues-spinner');
-const closedIssuesSpinner = document.querySelector('#closed-issues-spinner');
+let allIssuesCount = document.querySelector('#all-issues-count');
+let openIssuesCount = document.querySelector('#open-issues-count');
+let closedIssuesCount = document.querySelector('#closed-issues-count');
 
-async function loadIssues(status) {
+
+let issueElems = {
+    "all": {
+        count: allIssuesCount,
+        issues: allIssues,
+        spinner: allIssuesSpinner
+    },
+
+    "open": {
+        count: openIssuesCount,
+        issues: openIssues,
+        spinner: openIssuesSpinner
+    },
+
+    "closed": {
+        count: closedIssuesCount,
+        issues: closedIssues,
+        spinner: closedIssuesSpinner
+    }
+}
+
+async function loadIssues(tab) {
 
     const response = await fetch(
         "https://phi-lab-server.vercel.app/api/v1/lab/issues",
@@ -21,21 +41,18 @@ async function loadIssues(status) {
 
     let issues = responseObject.data;
     
-  if (status === "open") {
+  if (tab !== "all") {
 
-    let openIssues = issues.filter((d) => d.status === "open");
-    displayIssues(openIssues, status);
-  } else if (status === "closed") {
-
-    let closedIssues = issues.filter((d) => d.status === "closed");
-    displayIssues(closedIssues, status);
-  } else {
-
-    displayIssues(issues, status);
+      issues = issues.filter((d) => d.status === tab);
+      
   }
+    
+    displayIssues(issues, tab);
+
 }
 
-function displayIssues(issues, status) {
+function displayIssues(issues, tab) {
+
   for (issue of issues) {
     let issueCard = Object.assign(document.createElement("div"), {
       id: `issue-${issue.id}`,
@@ -57,17 +74,10 @@ function displayIssues(issues, status) {
       issueModal.showModal();
     });
 
-    if (status === "open") {
-        openIssues.appendChild(issueCard);
-        const spinner = openIssuesSpinner;
-    } else if (status === "closed") {
-      closedIssues.appendChild(issueCard);
-        const spinner = closedIssuesSpinner;
-    } else {
-      allIssues.append(issueCard, issueModal);
-        const spinner = allIssuesSpinner;
-    }
+    let c = issueElems[tab];
 
+      c.issues.append(issueCard, issueModal);
+      
     const openBadge = Object.assign(document.createElement("div"), {
       className: "badge bg-green-500 badge-xs",
     });
@@ -134,7 +144,7 @@ function displayIssues(issues, status) {
     });
 
     let issueLabels = Object.assign(document.createElement("p"), {
-      className: "card-actions justify-end",
+      className: "card-actions justify-end flex-col items-end",
     });
 
     let issueDivider = document.createElement("hr");
@@ -188,7 +198,7 @@ function displayIssues(issues, status) {
 
     issueModal.innerHTML = `<div class="modal-box">
      <h3 class="text-lg font-bold">${issue.title}</h3>
-<h6>
+<h6 class="text-gray-500">
 ${issue.status === "open" ? '<span class="badge bg-green-500 text-white">Open</span>' : '<h6><span class="badge bg-purple-500 text-white">Closed</span>'} | Opened by ${issue.author} | ${issueFDate}
 </h6>
 <p id="modal-${issue.id}-labels" class="flex gap-1 mt-4">
@@ -225,11 +235,16 @@ ${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</d
         
     }
 
-    // spinner.remove();
+      removeSpinner(c.spinner);
   }
 }
 
-loadIssues();
+function removeSpinner(spinnerParent) {
+    spinnerParent.innerHTML = "";
+    spinnerParent.style.display = "none";
+}
+
+loadIssues("all");
 
 const openTab = document.querySelector("#open-tab");
 const closedTab = document.querySelector("#closed-tab");
