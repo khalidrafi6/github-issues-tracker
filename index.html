@@ -20,33 +20,35 @@
   <body>
     <div class="hero bg-base-200 min-h-screen">
       <div class="hero-content flex-col">
-        <a href="/issues.html"><img alt="" src="./assets/github-logo.png" /></a>
+          <img alt="" src="./assets/github-logo.png" />
         <div class="text-center">
           <h1 class="text-5xl font-bold">Github Issues Tracker</h1>
           <p class="py-6">Sign in to manage your issues</p>
         </div>
         <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div class="card-body">
-            <fieldset class="fieldset">
-              <label class="label">Username</label>
-              <input
-                type="text"
-                id="username"
-                class="input"
-                placeholder="Enter Username"
-              />
-              <p class="font-bold text-blue-500">Default: admin</p>
-              <label class="label">Password</label>
-              <input
-                type="password"
-                id="password"
-                class="input"
-                placeholder="Enter Password"
-              />
-              <p class="font-bold text-blue-500">Default: admin123</p>
-              <button id="login-btn" class="btn btn-neutral mt-4">Login</button>
-            </fieldset>
-            <hr class="my-4" />
+              <form>
+                  <fieldset class="fieldset">
+                      <label class="label">Username</label>
+                      <input
+                          type="text"
+                          id="username"
+                          class="input"
+                          placeholder="Enter Username"
+                      />
+                      <p class="font-bold text-blue-500">Default: admin</p>
+                      <label class="label">Password</label>
+                      <input
+                          type="password"
+                          id="password"
+                          class="input"
+                          placeholder="Enter Password"
+                      />
+                      <p class="font-bold text-blue-500">Default: admin123</p>
+                      <button id="login-btn" type="submit" class="btn btn-neutral mt-4">Login</button>
+                  </fieldset>
+              </form>
+              <hr class="my-4" />
 
             <div class="text-center space-y-3">
               <h3 class="text-blue-400 font-semibold">Demo Credentials</h3>
