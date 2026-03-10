@@ -1,12 +1,19 @@
-const loginBtn = document.querySelector("#login-btn");
-const username = document.querySelector("#username");
-const password = document.querySelector("#password");
+const loginForm = document.querySelector("#login");
 
-loginBtn.addEventListener("click", (event) => {
+loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
-  if (username.value === "admin" && password.value === "admin123") {
+    
+    const loginData = new FormData(loginForm);
+
+    const demoData = new FormData();
+
+    demoData.append("username", "admin");
+    demoData.append("password", "admin123");
+    
+    if (JSON.stringify(loginData) === JSON.stringify(demoData)) {
     window.location.assign("./issues.html");
   } else {
-    alert("Invalid username or password! Please use default credentials.");
+      alert("Invalid username or password! Please use demo credentials.");
   }
+
 });
