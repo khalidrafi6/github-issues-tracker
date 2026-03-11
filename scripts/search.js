@@ -16,15 +16,13 @@ function showSpinner(spinnerElement, spinnerText, parent) {
 
 async function searchIssues() {
 
-    let currentTab = document.querySelector('input[name="status_tabs"]:checked').ariaLabel.toLowerCase();
-
-    let c = issueElems[currentTab];
-
+    for (tab in issueElems) {
+    let c = issueElems[tab];
     c.issues.innerHTML = ""
-        
     c.count.className = "loading loading-spinner loading-xs text-info";
     showSpinner(searchSpinner, searchSpinnerText, c.spinner);
-    
+    }
+        
     const searchData = new FormData(searchForm);
 
     const searchAPI = new URL('https://phi-lab-server.vercel.app/api/v1/lab/issues/search')
@@ -39,9 +37,6 @@ async function searchIssues() {
         const response = await fetch(`${searchAPI.href}?${searchParams}`);
         const responseObject = await response.json();
 
-        c.count.className = "";
-        c.count.innerText = responseObject.total;
-
         searchedIssues = responseObject.data;
     }
 
@@ -49,8 +44,6 @@ async function searchIssues() {
         console.error(e);
     }
     
-    // displayIssues(searchedIssues, currentTab); 
-
     for (tab in issueElems) {
         displayIssues(searchedIssues, tab);
 
