@@ -17,8 +17,8 @@ function showSpinner(spinnerElement, spinnerText, parent) {
 async function searchIssues() {
   for (tab in issueElems) {
     let c = issueElems[tab];
-    c.issues.innerHTML = "";
-    c.count.className = "loading loading-spinner loading-xs text-info";
+     c.issues.innerHTML = "";
+      c.count.className = "loading loading-spinner loading-xs text-info";
     showSpinner(searchSpinner, searchSpinnerText, c.spinner);
   }
 
@@ -31,8 +31,6 @@ async function searchIssues() {
   const searchParams = new URLSearchParams(searchData);
 
   let searchedIssues;
-
-  console.log(searchData.entries());
 
   try {
     const response = await fetch(`${searchAPI.href}?${searchParams}`);
@@ -49,7 +47,6 @@ async function searchIssues() {
     issueElems[tab].tab?.removeEventListener("click", loadIssues);
   }
 
-  console.log(openTab);
 }
 
 searchForm.addEventListener("submit", (event) => {
