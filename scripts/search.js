@@ -1,63 +1,58 @@
-const searchForm = document.querySelector('#search');
+const searchForm = document.querySelector("#search");
 
-const searchSpinner = Object.assign(document.createElement('span'), {
-    className: 'loading loading-spinner text-info',
-})
+const searchSpinner = Object.assign(document.createElement("span"), {
+  className: "loading loading-spinner text-info",
+});
 
-const searchSpinnerText = Object.assign(document.createElement('p'), {
-    textContent: 'Searching...',
-    className: 'text-gray-500'
-})
+const searchSpinnerText = Object.assign(document.createElement("p"), {
+  textContent: "Searching...",
+  className: "text-gray-500",
+});
 
 function showSpinner(spinnerElement, spinnerText, parent) {
-    parent.append(spinnerElement, spinnerText);
-    parent.style.display = "flex";
+  parent.append(spinnerElement, spinnerText);
+  parent.style.display = "flex";
 }
 
 async function searchIssues() {
-
-    for (tab in issueElems) {
+  for (tab in issueElems) {
     let c = issueElems[tab];
-    c.issues.innerHTML = ""
+    c.issues.innerHTML = "";
     c.count.className = "loading loading-spinner loading-xs text-info";
     showSpinner(searchSpinner, searchSpinnerText, c.spinner);
-    }
-        
-    const searchData = new FormData(searchForm);
+  }
 
-    const searchAPI = new URL('https://phi-lab-server.vercel.app/api/v1/lab/issues/search')
+  const searchData = new FormData(searchForm);
 
-    const searchParams = new URLSearchParams(searchData);
+  const searchAPI = new URL(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues/search",
+  );
 
-    let searchedIssues;
+  const searchParams = new URLSearchParams(searchData);
 
-    console.log(searchData.entries());
+  let searchedIssues;
 
-    try {
-        const response = await fetch(`${searchAPI.href}?${searchParams}`);
-        const responseObject = await response.json();
+  console.log(searchData.entries());
 
-        searchedIssues = responseObject.data;
-    }
+  try {
+    const response = await fetch(`${searchAPI.href}?${searchParams}`);
+    const responseObject = await response.json();
 
-    catch (e) {
-        console.error(e);
-    }
-    
-    for (tab in issueElems) {
-        displayIssues(searchedIssues, tab);
+    searchedIssues = responseObject.data;
+  } catch (e) {
+    console.error(e);
+  }
 
-            issueElems[tab].tab?.removeEventListener( 
-                "click",
-                loadIssues,
-            );
-    }
+  for (tab in issueElems) {
+    displayIssues(searchedIssues, tab);
 
-    console.log(openTab);
+    issueElems[tab].tab?.removeEventListener("click", loadIssues);
+  }
 
+  console.log(openTab);
 }
 
 searchForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    searchIssues();
-})
+  event.preventDefault();
+  searchIssues();
+});

@@ -2,64 +2,61 @@ const allIssues = document.querySelector("#all-issues");
 const openIssues = document.querySelector("#open-issues");
 const closedIssues = document.querySelector("#closed-issues");
 
-const allIssuesSpinner = document.getElementById('all-issues-spinner');
-const openIssuesSpinner = document.getElementById('open-issues-spinner');
-const closedIssuesSpinner = document.getElementById('closed-issues-spinner');
+const allIssuesSpinner = document.getElementById("all-issues-spinner");
+const openIssuesSpinner = document.getElementById("open-issues-spinner");
+const closedIssuesSpinner = document.getElementById("closed-issues-spinner");
 
-let allIssuesCount = document.querySelector('#all-issues-count');
-let openIssuesCount = document.querySelector('#open-issues-count');
-let closedIssuesCount = document.querySelector('#closed-issues-count');
+let allIssuesCount = document.querySelector("#all-issues-count");
+let openIssuesCount = document.querySelector("#open-issues-count");
+let closedIssuesCount = document.querySelector("#closed-issues-count");
 
 const openTab = document.querySelector("#open-tab");
 const closedTab = document.querySelector("#closed-tab");
 
 let issueElems = {
-    "all": {
-        count: allIssuesCount,
-        issues: allIssues,
-        spinner: allIssuesSpinner
-    },
+  all: {
+    count: allIssuesCount,
+    issues: allIssues,
+    spinner: allIssuesSpinner,
+  },
 
-    "open": {
-        count: openIssuesCount,
-        issues: openIssues,
-        spinner: openIssuesSpinner,
-        tab: openTab
-    },
+  open: {
+    count: openIssuesCount,
+    issues: openIssues,
+    spinner: openIssuesSpinner,
+    tab: openTab,
+  },
 
-    "closed": {
-        count: closedIssuesCount,
-        issues: closedIssues,
-        spinner: closedIssuesSpinner,
-        tab: closedTab
-    }
-}
+  closed: {
+    count: closedIssuesCount,
+    issues: closedIssues,
+    spinner: closedIssuesSpinner,
+    tab: closedTab,
+  },
+};
 
 async function loadIssues(event) {
+  const response = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+  );
 
-    const response = await fetch(
-        "https://phi-lab-server.vercel.app/api/v1/lab/issues",
-    );
+  const responseObject = await response.json();
 
-    const responseObject = await response.json();
+  let issues = responseObject.data;
 
-    let issues = responseObject.data;
+  let tab = event ? this.ariaLabel.toLowerCase() : "all";
 
-    let tab = event ? this.ariaLabel.toLowerCase() : "all";
-    
-    displayIssues(issues, tab);
-
+  displayIssues(issues, tab);
 }
 
 function displayIssues(issues, tab) {
+  issues =
+    tab !== "all" ? issues.filter((issue) => issue.status === tab) : issues;
 
-    issues = tab !== "all" ? issues.filter((issue) => issue.status === tab) : issues;
+  let c = issueElems[tab];
 
-    let c = issueElems[tab];
-
-    c.count.className = ""; // Remove spinner
-    c.count.innerText = issues.length;
-
+  c.count.className = ""; // Remove spinner
+  c.count.innerText = issues.length;
 
   for (issue of issues) {
     let issueCard = Object.assign(document.createElement("div"), {
@@ -82,8 +79,8 @@ function displayIssues(issues, tab) {
       issueModal.showModal();
     });
 
-      c.issues.append(issueCard, issueModal);
-      
+    c.issues.append(issueCard, issueModal);
+
     const openBadge = Object.assign(document.createElement("div"), {
       className: "badge bg-green-500 badge-xs",
     });
@@ -153,12 +150,12 @@ function displayIssues(issues, tab) {
       className: "card-actions justify-end flex-col items-end",
     });
 
-      let issueDivider = Object.assign(document.createElement("hr"), {
-          className: 'h-2',
-      });
+    let issueDivider = Object.assign(document.createElement("hr"), {
+      className: "h-2",
+    });
 
     let issueData = Object.assign(document.createElement("div"), {
-        className: "issue-data text-gray-500",
+      className: "issue-data text-gray-500",
       innerHTML: `<h6>${issue.author}</h6><h6>${issueFDate}</h6>`,
     });
 
@@ -240,25 +237,21 @@ ${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</d
     const modalLabels = document.querySelector(`#modal-${issue.id}-labels`);
 
     for (label of issue.labels) {
-
-        issueLabels.appendChild(labelBadges[label]);
-        modalLabels.innerHTML += labelBadges[label].outerHTML; // Because appendChild() breaks issueLabels
-        
+      issueLabels.appendChild(labelBadges[label]);
+      modalLabels.innerHTML += labelBadges[label].outerHTML; // Because appendChild() breaks issueLabels
     }
-
   }
 
-    removeSpinner(c.spinner, issues.length);
-
+  removeSpinner(c.spinner, issues.length);
 }
 
 function removeSpinner(spinnerParent, issueCount) {
-    if (issueCount){
-        spinnerParent.innerHTML = "";
-        spinnerParent.style.display = "none";
-    } else{
-        spinnerParent.innerHTML =  "<p class='text-gray-500'>No issues found</p>";
-    }
+  if (issueCount) {
+    spinnerParent.innerHTML = "";
+    spinnerParent.style.display = "none";
+  } else {
+    spinnerParent.innerHTML = "<p class='text-gray-500'>No issues found</p>";
+  }
 }
 
 loadIssues();
@@ -267,14 +260,6 @@ const once = {
   once: true,
 };
 
-openTab.addEventListener(
-  "click",
-    loadIssues,
-  once,
-);
+openTab.addEventListener("click", loadIssues, once);
 
-closedTab.addEventListener(
-  "click",
-    loadIssues,
-  once,
-);
+closedTab.addEventListener("click", loadIssues, once);

@@ -1,5 +1,5 @@
 {
-      "scripts": {
+  "scripts": {
     "deploy": "npx wrangler pages deploy ."
   },
   "devDependencies": {
