@@ -17,8 +17,8 @@ function showSpinner(spinnerElement, spinnerText, parent) {
 async function searchIssues() {
   for (tab in issueElems) {
     let c = issueElems[tab];
-     c.issues.innerHTML = "";
-      c.count.className = "loading loading-spinner loading-xs text-info";
+    c.issues.innerHTML = "";
+    c.count.className = "loading loading-spinner loading-xs text-info";
     showSpinner(searchSpinner, searchSpinnerText, c.spinner);
   }
 
@@ -46,7 +46,6 @@ async function searchIssues() {
 
     issueElems[tab].tab?.removeEventListener("click", loadIssues);
   }
-
 }
 
 searchForm.addEventListener("submit", (event) => {

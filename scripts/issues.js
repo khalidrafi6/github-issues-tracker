@@ -50,8 +50,7 @@ async function loadIssues(event) {
 }
 
 function displayIssues(issues, tab) {
-  issues =
-    tab !== "all" ? issues.filter((issue) => issue.status === tab) : issues;
+  issues = tab !== "all" ? issues.filter((issue) => issue.status === tab) : issues;
 
   let c = issueElems[tab];
 
@@ -60,7 +59,7 @@ function displayIssues(issues, tab) {
 
   for (issue of issues) {
     let issueCard = Object.assign(document.createElement("div"), {
-        id: `issue-${issue.id}-${tab}`,
+      id: `issue-${issue.id}-${tab}`,
       className: "card bg-base-100 shadow-sm border-transparent border-4",
     });
 
@@ -71,7 +70,7 @@ function displayIssues(issues, tab) {
     const issueFDate = issueDateSegments.join(", ");
 
     let issueModal = Object.assign(document.createElement("dialog"), {
-        id: `issue_${issue.id}_${tab}_modal`,
+      id: `issue_${issue.id}_${tab}_modal`,
       className: "modal",
     });
 
@@ -234,7 +233,9 @@ ${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</d
      </div>
    </div>`;
 
-      const modalLabels = document.querySelector(`#modal-${issue.id}-${tab}-labels`);
+    const modalLabels = document.querySelector(
+      `#modal-${issue.id}-${tab}-labels`,
+    );
 
     for (label of issue.labels) {
       issueLabels.appendChild(labelBadges[label]);
