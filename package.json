@@ -1,4 +1,7 @@
 {
+      "scripts": {
+    "deploy": "npx wrangler pages deploy ."
+  },
   "devDependencies": {
     "wrangler": "^4.71.0"
   }
