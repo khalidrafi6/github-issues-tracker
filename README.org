@@ -1,6 +1,6 @@
 * 1️⃣ What is the difference between var, let, and const?
 
-~var~ is hoisted, ~let~ and ~const~ aren't. And, ~const~ can't be reassigned while let can.
+~var~ is hoisted, ~let~ and ~const~ aren't. And, ~const~ can't be reassigned while ~let~ can.
 
 * 2️⃣ What is the spread operator (...)?
 
@@ -8,12 +8,12 @@ spread operator (~...~) expands iterables, such as arrays or strings, where more
 
 * 3️⃣ What is the difference between map(), filter(), and forEach()?
 
-~map()~ applies the provided function on each element of an array and returns the result as a new array. ~filter()~ creates a copy of the provided array with the elements from the given array that pass the provided test implemented as a function. ~forEach()~ runs the given function on each element of the array, but it doesn't return a new array
+~map()~ applies the provided function on each element of an array and returns the result as a new array. ~filter()~ creates a copy of the provided array with the elements from the given array that pass the provided test implemented as a function. ~forEach()~ runs the given function on each element of the array, but it doesn't return a new array. It always returns undefined.
 
 * 4️⃣ What is an arrow function?
 
-JS functions that are defined with arrow syntax, such as ~() => expression~, ~(param) => expression~ etc.
+JavaScript functions that are defined with arrow syntax, such as ~() => expression~, ~(param) => expression~ etc.
 
 * 5️⃣ What are template literals?
 
-Literals delimited with backticks that allow for multi-line strings, string interpolation etc. functionalities
+Literals delimited with backticks that allow for multi-line strings, string interpolation etc. functionalities.
