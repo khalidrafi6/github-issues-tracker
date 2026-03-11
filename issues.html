@@ -21,8 +21,12 @@
     />
 
     <style>
-      .issue-count-section {
-        display: flex;
+     input[name="status_tabs"]:checked {
+         color: var(--color-primary);
+     }
+
+     .issue-count-section {
+         display: flex;
         gap: 10px;
         align-items: center;
       }
@@ -91,7 +95,7 @@
                     id="search-field"
                     name="q"
                     placeholder="Search"
-                    class="input input-sm rounded-md md:input-md input-bordered w-17 sm:w-auto"
+                    class="input input-sm rounded-md md:input-md input-bordered w-19 sm:w-auto"
                 />
                 <button class="btn btn-circle btn-soft btn-sm md:btn-md btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
@@ -104,14 +108,14 @@
     </header>
 
     <main>
-      <div class="tabs tabs-box p-6 md:p-8 lg:p-[60px]">
-        <input
-          type="radio"
-          name="status_tabs"
-          class="tab"
-          aria-label="All"
-          checked="checked"
-        />
+        <div class="tabs tabs-border p-6 md:p-8 lg:p-[60px]">
+            <input
+                type="radio"
+                name="status_tabs"
+                class="tab"
+                aria-label="All"
+                checked="checked"
+            />
         <div
           id="all-tab-content"
           class="tab-content bg-base-100 border-base-300"
@@ -145,16 +149,16 @@
 
           <div
               id="all-issues-section"
-              class="bg-gray-100 p-3 flex justify-center"
+              class="bg-gray-100 p-6 flex justify-center"
           >
               <div id="all-issues-spinner" class="spinner-section">
                   <span class="loading loading-spinner text-primary"></span>
                   <p class="text-gray-500">Loading...</p>
               </div>
-            <div
-              id="all-issues"
-              class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2"
-            >
+              <div
+                  id="all-issues"
+                  class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
+              >
             </div>
           </div>
         </div>
@@ -199,7 +203,7 @@
 
           <div
               id="open-issues-section"
-              class="bg-gray-100 p-3 flex justify-center"
+              class="bg-gray-100 p-6 flex justify-center"
           >
               <div id="open-issues-spinner" class="spinner-section">
                   <span class="loading loading-spinner text-primary"></span>
@@ -207,7 +211,7 @@
               </div>
             <div
               id="open-issues"
-              class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
+              class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 bg-gray-100"
             ></div>
           </div>
         </div>
@@ -252,7 +256,7 @@
 
           <div
               id="closed-issues-section"
-              class="bg-gray-100 p-3 flex justify-center"
+              class="bg-gray-100 p-6 flex justify-center"
           >
               <div id="closed-issues-spinner" class="spinner-section">
                   <span class="loading loading-spinner text-primary"></span>
@@ -260,7 +264,7 @@
               </div>
               <div
                   id="closed-issues"
-                  class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 bg-gray-100 p-3"
+                  class="issues-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 bg-gray-100"
               ></div>
           </div>
         </div>
