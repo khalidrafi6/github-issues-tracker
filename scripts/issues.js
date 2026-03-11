@@ -10,6 +10,8 @@ let allIssuesCount = document.querySelector('#all-issues-count');
 let openIssuesCount = document.querySelector('#open-issues-count');
 let closedIssuesCount = document.querySelector('#closed-issues-count');
 
+const openTab = document.querySelector("#open-tab");
+const closedTab = document.querySelector("#closed-tab");
 
 let issueElems = {
     "all": {
@@ -21,17 +23,19 @@ let issueElems = {
     "open": {
         count: openIssuesCount,
         issues: openIssues,
-        spinner: openIssuesSpinner
+        spinner: openIssuesSpinner,
+        tab: openTab
     },
 
     "closed": {
         count: closedIssuesCount,
         issues: closedIssues,
-        spinner: closedIssuesSpinner
+        spinner: closedIssuesSpinner,
+        tab: closedTab
     }
 }
 
-async function loadIssues(tab) {
+async function loadIssues(event) {
 
     const response = await fetch(
         "https://phi-lab-server.vercel.app/api/v1/lab/issues",
@@ -40,18 +44,16 @@ async function loadIssues(tab) {
     const responseObject = await response.json();
 
     let issues = responseObject.data;
-    
-  if (tab !== "all") {
 
-      issues = issues.filter((d) => d.status === tab);
-      
-  }
+    let tab = event ? this.ariaLabel.toLowerCase() : "all";
     
     displayIssues(issues, tab);
 
 }
 
 function displayIssues(issues, tab) {
+
+    issues = tab !== "all" ? issues.filter((issue) => issue.status === tab) : issues;
 
     let c = issueElems[tab];
 
@@ -204,8 +206,12 @@ function displayIssues(issues, tab) {
 
     issueModal.innerHTML = `<div class="modal-box">
      <h3 class="text-lg font-bold">${issue.title}</h3>
-<h6 class="text-gray-500">
-${issue.status === "open" ? '<span class="badge bg-green-500 text-white">Open</span>' : '<h6><span class="badge bg-purple-500 text-white">Closed</span>'} | Opened by ${issue.author} | ${issueFDate}
+<h6 class="text-gray-500 flex flex-col sm:flex-row gap-2 my-2">
+${issue.status === "open" ? '<span class="badge bg-green-500 text-white">Open</span>' : '<span class="badge bg-purple-500 text-white">Closed</span>'}
+<span class="hidden sm:block">•</span>
+<span>Opened by ${issue.author}</span>
+<span class="hidden sm:block">•</span>
+<span>${issueFDate}</span>
 </h6>
 <p id="modal-${issue.id}-labels" class="flex gap-1 mt-4">
 </p>
@@ -226,7 +232,6 @@ ${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</d
 </div>
      <div class="modal-action">
        <form method="dialog">
-         <!-- if there is a button in form, it will close the modal -->
          <button class="btn">Close</button>
        </form>
      </div>
@@ -241,35 +246,35 @@ ${issue.priority === "high" ? '<div class="badge badge-error text-white">HIGH</d
         
     }
 
-      removeSpinner(c.spinner);
   }
+
+    removeSpinner(c.spinner, issues.length);
+
 }
 
-function removeSpinner(spinnerParent) {
-    spinnerParent.innerHTML = "";
-    spinnerParent.style.display = "none";
+function removeSpinner(spinnerParent, issueCount) {
+    if (issueCount){
+        spinnerParent.innerHTML = "";
+        spinnerParent.style.display = "none";
+    } else{
+        spinnerParent.innerHTML =  "<p class='text-gray-500'>No issues found</p>";
+    }
 }
 
-loadIssues("all");
+loadIssues();
 
-const openTab = document.querySelector("#open-tab");
-const closedTab = document.querySelector("#closed-tab");
 const once = {
   once: true,
 };
 
 openTab.addEventListener(
   "click",
-  () => {
-    loadIssues("open");
-  },
+    loadIssues,
   once,
 );
 
 closedTab.addEventListener(
   "click",
-  () => {
-    loadIssues("closed");
-  },
+    loadIssues,
   once,
 );
